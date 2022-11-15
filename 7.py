@@ -214,7 +214,7 @@
 # 100$ 10% -> 8 year
 
 
-def calculate_deposit(deposit: float, percent: float, k: float) -> int:
+def calculate_deposit(deposit: float | int, percent: float | int, k: float | int) -> int:
     expected_deposit = deposit * k
     percent /= 100
     years = 0
