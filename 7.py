@@ -199,7 +199,7 @@
 # def foo(numbers: List[Any, str]) -> Optional[List[Tuple[int, int]]]:
 #     return numbers
 
-# расширенная типизация с python 3.9
+# расширенная типизация с python 3.10
 # def bar(numbers: list[str, str]) -> list[tuple[int, int]] | None:
 #     a: str = numbers[0]
 #     return None
