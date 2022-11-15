@@ -23,4 +23,4 @@ def binary_to_decimal2(binary):
     return decimal
 
 
-print(binary_to_decimal2(decimal_to_binary(decimal=18)))
+print(binary_to_decimal2(binary=decimal_to_binary(decimal=18)))
