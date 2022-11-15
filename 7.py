@@ -206,3 +206,28 @@
 #
 #
 # bar(1234)
+
+
+# Данна сумма вклада и процент вклада,
+# сказать через сколько лет сумма вклада увеличится в двое
+# (ставка рефинансирования)
+# 100$ 10% -> 8 year
+
+
+def calculate_deposit(deposit: float, percent: float, k: float) -> int:
+    expected_deposit = deposit * k
+    percent /= 100
+    years = 0
+    while deposit < expected_deposit:
+        deposit += deposit * percent
+        deposit = round(deposit, 2)
+        years += 1
+        print(f'{years=} {deposit=}')
+    return years
+
+
+print(calculate_deposit(
+    float(input('deposit: ')),
+    float(input('percent: ')),
+    float(input('k: ')))
+)
