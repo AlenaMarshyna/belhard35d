@@ -235,22 +235,25 @@
 # C2H5OH -> {'C': 2, 'H': 6, 'O': 1}
 # H2O -> {'H': 2, 'O': 1}
 
-data = {}
-formula = 'C2H5OH'
-formula += '1' if formula[-1].isalpha() else ''
-print(formula)
+# data = {}
+# formula = 'C2H5OH'
+# formula += '1' if formula[-1].isalpha() else ''
+# print(formula)
+#
+# for i in range(len(formula)):
+#     if formula[i].isalpha():
+#         if formula[i+1].isdigit():
+#             if formula[i] in data:
+#                 data[formula[i]] += int(formula[i+1])
+#             else:
+#                 data[formula[i]] = int(formula[i+1])
+#         else:
+#             if formula[i] in data:
+#                 data[formula[i]] += 1
+#             else:
+#                 data[formula[i]] = 1
+# print(data)
 
-for i in range(len(formula)):
-    if formula[i].isalpha():
-        if formula[i+1].isdigit():
-            if formula[i] in data:
-                data[formula[i]] += int(formula[i+1])
-            else:
-                data[formula[i]] = int(formula[i+1])
-        else:
-            if formula[i] in data:
-                data[formula[i]] += 1
-            else:
-                data[formula[i]] = 1
-print(data)
+
+# data = dict(zip('abcdefgh', range(1, 9)))
 
