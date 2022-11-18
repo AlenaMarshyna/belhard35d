@@ -89,6 +89,9 @@
 
 #
 # class Button:
+#     """
+#     Кнопка для клавиатуры
+#     """
 #
 #     def __init__(self, text: str, request_contact: bool = False) -> None:
 #         self.request_contact = request_contact
@@ -96,8 +99,8 @@
 #
 #     def dict(self) -> dict:
 #         return {'text': self.text, 'request_contact': self.request_contact}
-#
-#
+
+
 # class Keyboard:
 #
 #     def __init__(self, keyboard: list[list[Button]]) -> None:
@@ -132,3 +135,13 @@
 # buttons = [[buttons[0], buttons[1]], [buttons[2]]]
 # keyboard = Keyboard(keyboard=buttons)
 # print(keyboard.serialize())
+
+
+# def multiply(a: int, b: int) -> int:
+#     """Произведение двух чисел
+#
+#     :param a: Первое число произведения
+#     :param b: Второе число произведения
+#     :return: Результат произведения
+#     """
+#     return a * b
