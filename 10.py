@@ -78,7 +78,7 @@
 #     print(file.read())
 # print(lines)
 
-import json
+# import json
 # text = '''
 # {
 #   "1": {
@@ -94,9 +94,32 @@ import json
 # with open('users.json', 'r', encoding='utf-8') as file:
 #     data = json.load(file)
 # print(data)
-data = {
-    'first_name': 'алекс',
-    'last_name': 'попов'
-}
-with open('alex.json', 'w', encoding='utf-8') as file:
-    json.dump(data, file, indent=2, ensure_ascii=False)
+# data = {
+#     'first_name': 'алекс',
+#     'last_name': 'попов'
+# }
+# with open('alex.json', 'w', encoding='utf-8') as file:
+#     json.dump(data, file, indent=2, ensure_ascii=False)
+
+
+from pydantic import BaseModel, EmailStr
+
+
+class User(BaseModel):
+    name: str
+    age: int
+    email: EmailStr
+
+
+data = [{
+    'name': 'vasya',
+    'age': '32',
+    'email': 'vasya@info.com'
+} for _ in range(15)]
+
+users = [User(**user) for user in data]
+print(users)
+# print(vasya.age)
+# print(vasya.email)
+# print(vasya.dict())
+
