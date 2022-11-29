@@ -81,7 +81,7 @@ class Taxi(object):
 #     #         cls.categories[pk] = new_category_name
 #
 #     @classmethod
-#     def update(cls, pk: int, new_category_name: str):
+#     def update(cls, pk: int, new_category_name: str) -> None:
 #         new_category_name = new_category_name.title()
 #         if new_category_name in cls.categories:
 #             raise ValueError('category is not unique')
@@ -108,6 +108,45 @@ class Category(object):
             }
         )
         return len(cls.categories) - 1
+
+    @classmethod
+    def get(cls, pk: int) -> dict:
+        try:
+            return cls.categories[pk]
+        except IndexError as e:
+            raise ValueError(e)
+
+    @classmethod
+    def delete(cls, pk: int) -> None:
+        try:
+            del cls.categories[pk]
+        except IndexError:
+            ...  # pass
+
+    @classmethod
+    def update(cls, new_category_name: str, pk: int) -> None:
+        new_category_name = new_category_name.title()
+        category = tuple(filter(lambda x: x['name'] == new_category_name, cls.categories))
+        if category:
+            raise ValueError('category is not unique')
+        try:
+            cls.categories[pk]['name'] = new_category_name
+        except IndexError:
+            cls.add(category_name=new_category_name, is_published=False)
+
+    @classmethod
+    def make_published(cls, pk: int) -> None:
+        try:
+            cls.categories[pk]['is_published'] = True
+        except IndexError as e:
+            raise ValueError(e)
+
+    @classmethod
+    def make_unpublished(cls, pk: int) -> None:
+        try:
+            cls.categories[pk]['is_published'] = False
+        except IndexError as e:
+            raise ValueError(e)
 
 
 print(Category.add('Food', True))
