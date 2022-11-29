@@ -41,15 +41,3 @@ print(taxi.find_car(4, False))
 print(taxi.find_car(4, False))
 print(taxi.find_car(4, False))
 
-
-class Taxi(Car):
-    def find_car(self, count_passengers: int, is_baby: bool) -> Car | None:
-        if count_passengers <= self.count_passenger_seats and self.is_busy == False:
-            if is_baby:
-                self.is_busy = True if self.is_baby_seat else False
-                return self if self.is_baby_seat else None
-            else:
-                self.is_busy = True
-                return self
-        else:
-            return
