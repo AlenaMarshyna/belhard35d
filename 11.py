@@ -31,13 +31,51 @@ class Taxi(object):
                     return car
 
 
-car1 = Car(color='black', count_passenger_seats=5, is_baby_seat=True)
-car2 = Car(color='white', count_passenger_seats=4, is_baby_seat=False)
-car3 = Car(color='red', count_passenger_seats=5, is_baby_seat=False)
-cars = [car1, car2, car3]
-taxi = Taxi(cars=cars)
-print(taxi.find_car(5, True))
-print(taxi.find_car(4, False))
-print(taxi.find_car(4, False))
-print(taxi.find_car(4, False))
+# car1 = Car(color='black', count_passenger_seats=5, is_baby_seat=True)
+# car2 = Car(color='white', count_passenger_seats=4, is_baby_seat=False)
+# car3 = Car(color='red', count_passenger_seats=5, is_baby_seat=False)
+# cars = [car1, car2, car3]
+# taxi = Taxi(cars=cars)
+# print(taxi.find_car(5, True))
+# print(taxi.find_car(4, False))
+# print(taxi.find_car(4, False))
+# print(taxi.find_car(4, False))
 
+class Category(object):
+
+    categories: list[str] = []
+
+    @classmethod
+    def add(cls, category: str) -> int:
+        category = category.title()
+        if category in cls.categories:
+            raise ValueError('category is  not unique')
+        cls.categories.append(category)
+        return cls.categories.index(category)
+        # return len(cls.categories) - 1
+
+    @classmethod
+    def get(cls, pk: int) -> str:
+        try:
+            return cls.categories[pk]
+        except IndexError as e:
+            raise ValueError(e)
+
+    @classmethod
+    def delete(cls, pk: int) -> None:
+        try:
+            del cls.categories[pk]
+        except IndexError:
+            ...  # pass
+
+    @classmethod
+    def update(cls, pk: int, new_category_name: str):
+        new_category_name = new_category_name.title()
+        if new_category_name in cls.categories:
+            raise ValueError('category is not unique')
+        try:
+            cls.get(pk=pk)
+        except ValueError:
+            cls.add(category=new_category_name)
+        else:
+            cls.categories[pk] = new_category_name
