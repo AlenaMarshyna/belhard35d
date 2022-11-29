@@ -26,8 +26,30 @@ class Taxi(object):
                 if is_baby and car.is_baby_seat:
                     car.is_busy = True
                     return car
-                elif is_baby:
-                    return None
-                else:
+                elif not is_baby:
                     car.is_busy = True
                     return car
+
+
+car1 = Car(color='black', count_passenger_seats=5, is_baby_seat=True)
+car2 = Car(color='white', count_passenger_seats=4, is_baby_seat=False)
+car3 = Car(color='red', count_passenger_seats=5, is_baby_seat=False)
+cars = [car1, car2, car3]
+taxi = Taxi(cars=cars)
+print(taxi.find_car(5, True))
+print(taxi.find_car(4, False))
+print(taxi.find_car(4, False))
+print(taxi.find_car(4, False))
+
+
+class Taxi(Car):
+    def find_car(self, count_passengers: int, is_baby: bool) -> Car | None:
+        if count_passengers <= self.count_passenger_seats and self.is_busy == False:
+            if is_baby:
+                self.is_busy = True if self.is_baby_seat else False
+                return self if self.is_baby_seat else None
+            else:
+                self.is_busy = True
+                return self
+        else:
+            return
