@@ -455,3 +455,12 @@
 # while numbers:
 #     del numbers[-1]
 #     print(numbers)
+
+
+def baz():
+    print('baz')
+
+
+print(__name__)
+if __name__ == '__main__':
+    baz()
