@@ -595,17 +595,51 @@
 #     print('consonants')
 # else:
 #     print('equal')
-with open('numbers.txt', 'r', encoding='utf-8') as file:
-    lines = [line.strip() for line in file]
-    for line in lines:
-        if line:
-            word_count = line.count(' ') + 1
-            letters_count = 0
-            for symbol in line:
-                if symbol.isalpha():
-                    letters_count += 1
-        else:
-            word_count = 0
-            letters_count = 0
-        print(f'{word_count=} {letters_count=}')
+# with open('numbers.txt', 'r', encoding='utf-8') as file:
+#     lines = [line.strip() for line in file]
+#     for line in lines:
+#         if line:
+#             word_count = line.count(' ') + 1
+#             letters_count = 0
+#             for symbol in line:
+#                 if symbol.isalpha():
+#                     letters_count += 1
+#         else:
+#             word_count = 0
+#             letters_count = 0
+#         print(f'{word_count=} {letters_count=}')
+from pydantic import BaseModel
 
+
+class Product(BaseModel):
+    article: str
+    title: str
+    description: str = ''
+    price: float
+
+
+with open('products.csv', 'r', encoding='utf-8') as file:
+    headers = file.readline().strip().split(',')
+    products = []
+    invalid_product = []
+    for product in file:
+        values = product.strip().split(',')
+        product = dict(list(zip(headers, values)))
+        if not product['article']:
+            invalid_product.append(product)
+            continue
+        try:
+            product['price'] = float(product['price'])
+        except ValueError:
+            invalid_product.append(product)
+            continue
+        products.append(product)
+with open('invalid_product.csv', 'w', encoding='utf-8') as file:
+    headers = ','.join(headers)
+    for product in invalid_product:
+        values = ','.join(list(product.values()))
+        headers += f'\n{values}'
+    file.write(headers)
+
+products = list(map(lambda x: Product(**x), products))
+print(products)
