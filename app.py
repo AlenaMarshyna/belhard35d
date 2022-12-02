@@ -577,21 +577,35 @@
 # for i in range(len(lines)):
 #     with open(f'{i}.txt', 'w', encoding='utf-8') as file:
 #         file.write('\n'.join([line for line in lines[i] if line]))
+# with open('numbers.txt', 'r', encoding='utf-8') as file:
+#     print(file.read())
+#     file.seek(0)
+#     words = file.read().lower().replace('\n', '').split()
+# vowels = 'ёуеэоаыяиюeyuioa'
+# vowels_count = 0
+# consonants_count = 0
+# for word in words:
+#     if word[0] in vowels:
+#         vowels_count += 1
+#     else:
+#         consonants_count += 1
+# if vowels_count > consonants_count:
+#     print('vowels')
+# elif consonants_count > vowels_count:
+#     print('consonants')
+# else:
+#     print('equal')
 with open('numbers.txt', 'r', encoding='utf-8') as file:
-    print(file.read())
-    file.seek(0)
-    words = file.read().lower().replace('\n', '').split()
-vowels = 'ёуеэоаыяиюeyuioa'
-vowels_count = 0
-consonants_count = 0
-for word in words:
-    if word[0] in vowels:
-        vowels_count += 1
-    else:
-        consonants_count += 1
-if vowels_count > consonants_count:
-    print('vowels')
-elif consonants_count > vowels_count:
-    print('consonants')
-else:
-    print('equal')
+    lines = [line.strip() for line in file]
+    for line in lines:
+        if line:
+            word_count = line.count(' ') + 1
+            letters_count = 0
+            for symbol in line:
+                if symbol.isalpha():
+                    letters_count += 1
+        else:
+            word_count = 0
+            letters_count = 0
+        print(f'{word_count=} {letters_count=}')
+
