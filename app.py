@@ -553,8 +553,8 @@
 # )
 #
 # logging.error('user mudak')
-from itertools import zip_longest
-from math import ceil
+# from itertools import zip_longest
+# from math import ceil
 
 # N = int(input('N: '))
 # with open('numbers.txt', 'r', encoding='utf-8') as file:
@@ -568,12 +568,30 @@ from math import ceil
 #         file.write('\n'.join([line for line in lines[i] if line]))
 
 
-N = int(input('N: '))
+# N = int(input('N: '))
+# with open('numbers.txt', 'r', encoding='utf-8') as file:
+#     lines = [line.strip() for line in file if line.strip()]
+#     lines_iter = iter(lines)
+#     lines = list(zip_longest(*([lines_iter]*N)))
+#
+# for i in range(len(lines)):
+#     with open(f'{i}.txt', 'w', encoding='utf-8') as file:
+#         file.write('\n'.join([line for line in lines[i] if line]))
 with open('numbers.txt', 'r', encoding='utf-8') as file:
-    lines = [line.strip() for line in file if line.strip()]
-    lines_iter = iter(lines)
-    lines = list(zip_longest(*([lines_iter]*N)))
-
-for i in range(len(lines)):
-    with open(f'{i}.txt', 'w', encoding='utf-8') as file:
-        file.write('\n'.join([line for line in lines[i] if line]))
+    print(file.read())
+    file.seek(0)
+    words = file.read().lower().replace('\n', '').split()
+vowels = 'ёуеэоаыяиюeyuioa'
+vowels_count = 0
+consonants_count = 0
+for word in words:
+    if word[0] in vowels:
+        vowels_count += 1
+    else:
+        consonants_count += 1
+if vowels_count > consonants_count:
+    print('vowels')
+elif consonants_count > vowels_count:
+    print('consonants')
+else:
+    print('equal')

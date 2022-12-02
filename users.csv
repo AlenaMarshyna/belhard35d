@@ -1,3 +1,5 @@
-name,email,age
-alex,alex@gmail.com,23
-pavel,pavel@gmail.com,43
+name,age,city
+vasya,34,minsk
+pavel,42,gomel
+
+masha,23,mogilev
