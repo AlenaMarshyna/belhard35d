@@ -38,3 +38,31 @@ cur = conn.cursor()
 #     );
 # ''')
 # conn.commit()
+# cur.execute('''
+#     UPDATE categories
+#     SET name = ?,
+#     is_published = ?
+#     WHERE id = 2;
+# ''', ('Meat', False))
+# conn.commit()
+# cur.execute('''
+#     ALTER TABLE users ADD surname VARCHAR(32);
+# ''')
+# conn.commit()
+# cur.execute('''
+#     DELETE FROM users WHERE name LIKE 'v%';
+# ''')
+# conn.commit()
+
+# cur.execute('''
+#     SELECT * FROM categories ORDER BY name ASC, id DESC;
+# ''')
+# print(cur.fetchall())
+
+
+# cur.execute('''
+#     SELECT categories.name, products.name, products.descr, products.price FROM categories
+#     JOIN products ON products.category_id = categories.id
+#     WHERE categories.is_published = true AND products.price > 100;
+# ''')
+# print(cur.fetchall())
