@@ -1,6 +1,5 @@
 from sqlalchemy import Column, INT, VARCHAR, ForeignKey, \
     DECIMAL, BOOLEAN, create_engine, select, BIGINT
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, sessionmaker, declarative_mixin, Session
 
 Base = declarative_base()
