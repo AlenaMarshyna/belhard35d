@@ -1,40 +1,100 @@
-from sqlalchemy import Column, INT, VARCHAR, ForeignKey, DECIMAL, BOOLEAN, create_engine
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import Column, INT, VARCHAR, ForeignKey, \
+    DECIMAL, BOOLEAN, create_engine, select
+from sqlalchemy.orm import declarative_base, sessionmaker, declarative_mixin, Session
 
 Base = declarative_base()
 
 
-class Category(Base):
-    __tablename__ = 'categories'
+@declarative_mixin
+class BaseMixin(object):
 
     id = Column(INT, primary_key=True)
+
+    engine = create_engine('postgresql://belhard:belhard@0.0.0.0:5432/bh35d')
+    _Session = sessionmaker(bind=engine)
+
+    @staticmethod
+    def create_session(func):
+        def wrapper(*args, **kwargs):
+            with BaseMixin._Session() as session:
+                return func(*args, **kwargs, session=session)
+        return wrapper
+
+    @create_session
+    def save(self, session: Session = None) -> None:
+        session.add(self)
+        session.commit()
+        session.refresh(self)
+
+    @classmethod
+    @create_session
+    def get(cls, pk, session: Session = None) -> Base | None:
+        return session.get(cls, pk)
+
+    @classmethod
+    @create_session
+    def all(cls, order_by: str = 'id', session: Session = None, **kwargs) -> list[Base]:
+        return session.scalars(
+            select(cls)
+            .filter_by(**kwargs)
+            .order_by(order_by)
+        ).all()
+
+    @create_session
+    def delete(self, session: Session = None):
+        session.delete(self)
+        session.commit()
+
+
+class Category(BaseMixin, Base):
+    __tablename__ = 'categories'
+
     name = Column(VARCHAR(64), nullable=False, unique=True)
 
 
-class Product(Base):
+class Product(BaseMixin, Base):
     __tablename__ = 'products'
 
-    id = Column(INT, primary_key=True)
     name = Column(VARCHAR(64), nullable=False)
     price = Column(DECIMAL(8, 2), default=1)
     is_published = Column(BOOLEAN, default=False)
     category_id = Column(INT, ForeignKey('categories.id', ondelete='CASCADE'), nullable=False)
 
 
-engine = create_engine('postgresql://belhard:belhard@0.0.0.0:5432/bh35d')
-Session = sessionmaker(bind=engine)
+# category = Category(name='Very Cool Category')
+# category.save()
+# print(category.id, category.name)
+# category = Category.get(pk=22)
+# category.delete()
+# categories = Product.all(order_by='name', category_id=1)
+# print(categories)
+# category.name = 'Category Cool'
+# category.save()
 
-from csv import DictReader
-
-with open('categories.csv', 'r', encoding='utf-8') as file:
-    reader = DictReader(file)
-
-    with Session() as session:
-        for category in reader:
-            cat = Category(**category)
-            session.add(cat)
-            try:
-                session.commit()
-            except IntegrityError:
-                session.rollback()
+# with Session() as session:
+    # session.execute(
+    #     update(Product)
+    #     .values(name='PRODUCT')
+    #     .where(Product.id == 1)
+    # )
+    # session.commit()
+    # product = session.get(Product, 1)
+    # product.price = 250.0
+    # session.add(product)
+    # session.commit()
+    # print(product.name)
+    # session.delete(product)
+    # session.commit()
+    # session.execute(
+    #     delete(Product)
+    #     .where(Product.is_published == False)
+    # )
+    # session.commit()
+    # query = session.execute(
+    #     select(Product, Category)
+    #     .join(Category)
+    #     .where(Product.is_published == True)
+    # )
+    # query = query.all()
+    # for product, category in query:
+    #     print(product.name, category.name)
