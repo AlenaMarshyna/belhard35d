@@ -643,3 +643,13 @@
 #
 # products = list(map(lambda x: Product(**x), products))
 # print(products)
+# from models import User
+#
+#
+# def send_email(user: User):
+#     print(f'message send to {user.email}')
+#
+#
+# users = User.all()
+# for user in users:
+#     send_email(user=user)
